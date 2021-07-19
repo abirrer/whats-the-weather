@@ -1,7 +1,6 @@
-import Head from 'next/head'
-import Image from 'next/image'
+import Head from 'next/head';
 import Tile from '../components/Tile';
-import styles from '../styles/Home.module.css'
+import styles from '../styles/Home.module.css';
 
 export default function Home() {
   return (
@@ -22,12 +21,12 @@ export default function Home() {
         </p>
 
         <div className={styles.grid}>
-          <Tile location='Your Location' temp={19} href={''}/>
-          <Tile location='Los Angeles' temp={27} href={''}/>
-          <Tile location='New York' temp={24} href={''}/>
-          <Tile location='Berlin' temp={20} href={''}/>
-          <Tile location='Zürich' temp={16} href={''}/>
-          <Tile location='Tokyo' temp={39} href={''}/>
+          <Tile location='Your Location' temp={19} href={'/your-location'}/>
+          <Tile location='Los Angeles' temp={27} href={'/los-angeles'}/>
+          <Tile location='New York' temp={24} href={'/new-york'}/>
+          <Tile location='Berlin' temp={20} href={'/berlin'}/>
+          <Tile location='Zürich' temp={16} href={'/zuerich'}/>
+          <Tile location='Tokyo' temp={39} href={'/tokyo'}/>
         </div>
       </main>
 

@@ -51,13 +51,20 @@
 }
 
 .title,
-.description {
+.description,
+.detail {
   text-align: center;
 }
 
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
+}
+
+.detail {
+  line-height: 1.5;
+  font-size: 1.5rem;
+  margin: 20px;
 }
 
 .code {
@@ -77,6 +84,46 @@
   margin-top: 3rem;
 }
 
+.wrapper {
+  display: grid;
+  grid-gap: 0.6rem;
+  grid-template-columns: repeat(4, 1fr);
+  /* grid-template-columns: repeat(autofit, minmax(25%, 1fr)); */
+}
+
+.box {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: solid;
+}
+
+.weather {
+  grid-column: 1 / span 2;
+}
+
+.temp {
+  grid-column: 1 / span 2;
+  grid-row: 2 / span 2;
+}
+
+.sunrise {
+  grid-column: 3 / span 1;
+  grid-row: 1 / span 2;
+}
+.sunset {
+  grid-column: 4 / span 1;
+  grid-row: 1 / span 2;
+}
+.humidity {
+  grid-column: 3 / span 1;
+  grid-row: 3 / span 2;
+}
+.vis {
+  grid-column: 4 / span 1;
+  grid-row: 3 / span 2;
+}
+
 .card {
   display: flex;
   justify-content: space-between;
@@ -90,7 +137,6 @@
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
   width: 30%;
-
 }
 
 .card:hover,
