@@ -1,3 +1,9 @@
+# Whats the Weather App
+
+## Overview
+
+<p>A simple weather app using the OpenWeatherMap Api.  Users can search the weather & details of a specific city or click to see the details of cities already on the dashboard. </p>
+
 This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
 
 ## Getting Started
@@ -12,23 +18,35 @@ yarn dev
 
 Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## Technologies Used
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+<p>HTML, CSS modules, Javascript, React, Next</p>
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+## Details
 
-## Learn More
+Completed:
+<ul>
+    <li>App features 2 main pages: a dashboard and a detail page. On the dashboard, a user can search for/add additional cities to their dashboard. On the detail page, the application fetches weather details of the specific city selected.
+    <li>Conversion/formatting of the weather data into a consumable format for the user.
+    <li>Loading message is shown when the application is fetching data.
+    <li>Error message is shown if there was a problem with fetching data. 
+    <li>Response to different device sizes.
+</ul>
 
-To learn more about Next.js, take a look at the following resources:
+Improvements:
+<ul>
+    <li>Passing of the location value from homepage to detail page is ugly, not user-friendly, and easily tampered with (currently using router/params, could have also used some type of state mgmt with redux, also context api).
+    <li>Maintain updated city list after user addition (on refresh and back/forth navigation).
+    <li>Input validation error message to appear when a city inputted is a duplicate.
+    <li>Back arrow for user to navigate to the homepage within the application.
+    <li>Allow user to click enter key to submit input.
+    <li>User selection of units (metric vs imperial, etc.)
+    <li>Unit & integration tests needed.
+</ul>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+Known Issues:
+<ul>
+    <li>Input validation with the default list of cities needs to check for capitalizations, etc.
+    <li>Detail page refresh results in error every single time > want this to make the API request upon refresh.
+    <li>Sunset/sunrise timing is not location specific, it is provided in UTC across the board.
+</ul>
