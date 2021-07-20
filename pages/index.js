@@ -1,8 +1,29 @@
+import { useState } from 'react';
 import Head from 'next/head';
 import Tile from '../components/Tile';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
+  const [cities, setCities] = useState(["Los Angeles", "New York", "Berlin", "Zurich", "Toyko"]);
+  const [userInputCity, setUserInputCity] = useState('');
+
+  const handleInput = (event) => {
+    setUserInputCity(event.target.value);
+  }
+
+  const onSubmit = () => {
+    /**
+     * Only update the list of cities displayed if the 
+     * inputted city is not a duplicate.
+     */
+    if (cities.includes(userInputCity)) {
+      setUserInputCity('');
+    } else {
+      setCities(prevCities => [...prevCities, userInputCity]);
+      setUserInputCity('');
+    }
+  }
+
   return (
     <div className={styles.container}>
       <Head>
@@ -16,17 +37,29 @@ export default function Home() {
           {`What's the Weather?`}
         </h1>
 
-        <p className={styles.description}>
-          Check the weather in your area!
-        </p>
+        <div className={`${styles.searchBox} ${styles.description}`}>
+          <label htmlFor="input-location">
+            Search Location:
+          </label>
+
+          <input
+            type="text"
+            id="input-location"
+            placeholder={" example: London"}
+            value={userInputCity}
+            onChange={handleInput}
+          />
+
+          <button onClick={onSubmit}>
+            Search
+          </button>
+        </div>
 
         <div className={styles.grid}>
-          <Tile location='Your Location' temp={19} href={'/your-location'}/>
-          <Tile location='Los Angeles' temp={27} href={'/los-angeles'}/>
-          <Tile location='New York' temp={24} href={'/new-york'}/>
-          <Tile location='Berlin' temp={20} href={'/berlin'}/>
-          <Tile location='Zürich' temp={16} href={'/zuerich'}/>
-          <Tile location='Tokyo' temp={39} href={'/tokyo'}/>
+          {cities.map((city, index) => {
+            const cityUrl = `/${city.split(" ").join("-").toLowerCase()}`;
+            return (<Tile location={city} key={index} href={{pathname: cityUrl, query: { loc: city }}} />)
+          })}
         </div>
       </main>
 

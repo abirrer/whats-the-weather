@@ -3,7 +3,6 @@
   padding: 0 0.5rem;
   display: flex;
   flex-direction: column;
-  justify-content: center;
   align-items: center;
   height: 100vh;
 }
@@ -26,6 +25,9 @@
   align-items: center;
 }
 
+/**
+  * Stylings for all pages
+  */
 .footer a {
   display: flex;
   justify-content: center;
@@ -33,47 +35,39 @@
   flex-grow: 1;
 }
 
-.title a {
-  color: #0070f3;
+.a {
   text-decoration: none;
 }
 
-.title a:hover,
-.title a:focus,
-.title a:active {
+.a :hover,
+.a :focus,
+.a :active {
+  color: #0070f3;
   text-decoration: underline;
 }
 
 .title {
-  margin: 0;
+  margin: 1rem;
   line-height: 1.15;
   font-size: 4rem;
 }
 
+.error {
+  margin-top: 3rem;
+  line-height: 2;
+  font-size: 2rem;
+}
+
 .title,
 .description,
-.detail {
+.error {
   text-align: center;
 }
 
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
-}
-
-.detail {
-  line-height: 1.5;
-  font-size: 1.5rem;
-  margin: 20px;
-}
-
-.code {
-  background: #fafafa;
-  border-radius: 5px;
-  padding: 0.75rem;
-  font-size: 1.1rem;
-  font-family: Menlo, Monaco, Lucida Console, Liberation Mono, DejaVu Sans Mono,
-    Bitstream Vera Sans Mono, Courier New, monospace;
+  margin-top: 3rem;
 }
 
 .grid {
@@ -87,41 +81,31 @@
 .wrapper {
   display: grid;
   grid-gap: 0.6rem;
-  grid-template-columns: repeat(4, 1fr);
-  /* grid-template-columns: repeat(autofit, minmax(25%, 1fr)); */
+  grid-template-columns: repeat(2, 1fr);
+}
+
+.halfContainer {
+  margin: 1rem;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  border-radius: 10px;
+  border: 1px solid #0070f3;
+  transition: color 0.15s ease, border-color 0.15s ease;
+  color: #0070f3;
 }
 
 .box {
   display: flex;
   align-items: center;
   justify-content: center;
-  border: solid;
-}
-
-.weather {
-  grid-column: 1 / span 2;
 }
 
 .temp {
-  grid-column: 1 / span 2;
-  grid-row: 2 / span 2;
-}
-
-.sunrise {
-  grid-column: 3 / span 1;
-  grid-row: 1 / span 2;
-}
-.sunset {
-  grid-column: 4 / span 1;
-  grid-row: 1 / span 2;
-}
-.humidity {
-  grid-column: 3 / span 1;
-  grid-row: 3 / span 2;
-}
-.vis {
-  grid-column: 4 / span 1;
-  grid-row: 3 / span 2;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-evenly;
 }
 
 .card {
@@ -139,6 +123,9 @@
   width: 30%;
 }
 
+.halfContainer:hover,
+.halfContainer:focus,
+.halfContainer:active,
 .card:hover,
 .card:focus,
 .card:active {
@@ -151,10 +138,11 @@
   font-size: 1.5rem;
 }
 
-.card p {
-  margin: 0;
-  font-size: 1.25rem;
-  line-height: 1.5;
+.searchBox {
+  display: flex;
+  flex-direction: row;
+  width: 70%;
+  justify-content: space-around;
 }
 
 @media (max-width: 600px) {
@@ -165,5 +153,14 @@
 
   .card {
     width: 80%;
+  }
+
+  .searchBox {
+    flex-direction: column;
+  }
+
+  .wrapper {
+    display: flex;
+    flex-direction: column;
   }
 }

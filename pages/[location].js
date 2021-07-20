@@ -1,8 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import PropTypes from 'prop-types';
+import { useRouter } from 'next/router'
+import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
-export default function LocationDetailPage({ providedLocation }) {
+export default function LocationDetailPage() {
+  //Get location information from router to initiate API request
+  const router = useRouter();
+  const { query: { loc } } = router;
+
+  const [location, setLocation] = useState(loc); 
   const [weatherData, setWeatherData] = useState({
     description: '',
     tempCurrent: '',
@@ -13,18 +19,20 @@ export default function LocationDetailPage({ providedLocation }) {
     humidity: '',
     visibility: ''
   });
-  const [location, setLocation] = useState(providedLocation || 'london');
+  const [showErrorMessage, setShowErrorMessage] = useState(false);
+  const [isLoaded, setIsLoaded] = useState(false);
 
   const apiKey = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY;
   const searchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`;
 
   useEffect(() => {
     fetch(searchUrl).then(res => res.json()).then(data => {
-      
+
       const { weather, main, sys, visibility } = data;
 
+      //Format some of the data received to be more readable for user
       const convertMToKm = meter => (meter/1000).toFixed(1);
-      const convertTimestamp = timestamp => {
+      const parseTimestamp = timestamp => {
         const date = new Date(timestamp * 1000);
         const slicedTimeStamp = date.toISOString().slice(-13, -5);
         return slicedTimeStamp;
@@ -36,60 +44,61 @@ export default function LocationDetailPage({ providedLocation }) {
         tempCurrent: roundTemp(main.temp),
         tempLow: roundTemp(main.temp_min),
         tempHigh: roundTemp(main.temp_max),
-        sunrise: convertTimestamp(sys.sunrise),
-        sunset: convertTimestamp(sys.sunset),
+        sunrise: parseTimestamp(sys.sunrise),
+        sunset: parseTimestamp(sys.sunset),
         humidity: main.humidity,
         visibility: convertMToKm(visibility)
       });
+      setIsLoaded(true);
 
+    }).catch(err => {
+      setIsLoaded(true);
+      setShowErrorMessage(true);
     })
   }, [searchUrl]);
 
   const { description, tempCurrent, tempLow, tempHigh, sunrise, sunset, humidity, visibility } = weatherData;
 
   return (
-    <div>
-      <h1 className={styles.title}>{location}</h1>
-
-      <div className={styles.wrapper}>
-
-          <p className={`${styles.box} ${styles.description} ${styles.weather}`}>{description}</p>
-          <h2 className={`${styles.box} ${styles.title} ${styles.temp}`}>{tempCurrent}&deg;C</h2>
-          <p className={styles.box}>{tempLow}&deg;C</p>
-          <p className={styles.box}>{tempHigh}&deg;C</p>
-
-          <p className={`${styles.box} ${styles.sunrise}`}>{sunrise}</p>
-          <p className={`${styles.box} ${styles.sunset}`}>{sunset}</p>
-          <p className={`${styles.box} ${styles.humidity}`}>{humidity}%</p>
-          <p className={`${styles.box} ${styles.vis}`}>{visibility} km</p>
-
+    !isLoaded ? (
+      <div>
+        <h1 className={styles.title}>Loading...</h1>
       </div>
+    ) : (
+      showErrorMessage ? 
+        (<h1 className={styles.error}>
+          There was an error with your request. <br />
+          <Link href='/'>Click here to return to the start page</Link>.
+          </h1>
+        )
+        : (
+        <div>
+          <h1 className={styles.title}>{location}</h1>
 
-    </ div>
+          <div className={styles.wrapper}>
+            <div className={styles.halfContainer}>
+              <p className={`${styles.box}`}>{description}</p>
+              <h2 className={`${styles.box} ${styles.title} ${styles.temp}`}>{tempCurrent}&deg;C</h2>
+              <div className={styles.temp}>
+                <p className={styles.box}>Low: {tempLow}&deg;C</p>
+                <p className={styles.box}>High: {tempHigh}&deg;C</p>
+              </div>
+              
+            </div>
+            <div className={styles.halfContainer}>
+              <div className={styles.temp}>
+                <p className={`${styles.box}`}>Sunrise: {sunrise}</p>
+                <p className={`${styles.box}`}>Sunset: {sunset}</p>
+              </div>
+              <div className={styles.temp}>
+                <p className={`${styles.box}`}>Humidity: {humidity}%</p>
+                <p className={`${styles.box}`}>Visibility: {visibility} km</p>
+              </div>
+            </div>
+          </div>
+
+        </ div>
+      )
+    )
   )
-};
-
-
-LocationDetailPage.propTypes = {
-  location: PropTypes.string.isRequired,
-  weather: PropTypes.string,
-  tempCurrent: PropTypes.number,
-  tempLow: PropTypes.number,
-  tempHigh: PropTypes.number,
-  sunrise: PropTypes.string,
-  sunset: PropTypes.string,
-  humidity: PropTypes.string,
-  visibility: PropTypes.string
-};
-
-LocationDetailPage.defaultProps = {
-  location: "Los Angeles",
-  weather: "Sunny",
-  tempCurrent: 27,
-  tempLow: 16,
-  tempHigh: 32,
-  sunrise: "5:07",
-  sunset: "19:23",
-  humidity: "15%",
-  visibility: "16.2 km"
 };

@@ -1,23 +1,23 @@
 import PropTypes from 'prop-types';
+import Link from "next/link"
 import styles from '../../styles/Home.module.css';
 
-export default function Tile({ location, temp, href }) {
+export default function Tile({ location, href }) {
   return (
-    <a href={href} className={styles.card}>
-      <h2>{location} &rarr;</h2>
-      <p>{temp}</p>
-    </a>
+    <Link href={href} passHref>
+      <a className={`${styles.card}`}>
+        <h2>{location} &rarr;</h2>
+      </a>
+    </Link>
   )
 }
 
 Tile.propTypes = {
   location: PropTypes.string.isRequired,
-  temp: PropTypes.number,
-  href: PropTypes.string
+  href: PropTypes.object
 };
 
 Tile.defaultProps = {
   location: null,
-  temp: null,
   href: null
 };
