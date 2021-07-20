@@ -4,11 +4,14 @@ import Link from 'next/link';
 import styles from '../styles/Home.module.css';
 
 export default function LocationDetailPage() {
-  //Get location information from router to initiate API request
+  //Get location information from router to initiate API request.
   const router = useRouter();
-  const { query: { loc } } = router;
+  const { location } = router.query;
 
-  const [location, setLocation] = useState(loc); 
+  //Convert url slug into page title and appropriate query string ("new-york" becomes "New York").
+  const capitalizedLocation = location.split('-').map( w =>  w.substring(0,1).toUpperCase()+ w.substring(1)).join(' ');
+
+  const [locationName, setLocationName] = useState(capitalizedLocation); 
   const [weatherData, setWeatherData] = useState({
     description: '',
     tempCurrent: '',
@@ -23,7 +26,7 @@ export default function LocationDetailPage() {
   const [isLoaded, setIsLoaded] = useState(false);
 
   const apiKey = process.env.NEXT_PUBLIC_OPEN_WEATHER_MAP_API_KEY;
-  const searchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${location}&units=metric&appid=${apiKey}`;
+  const searchUrl = `https://api.openweathermap.org/data/2.5/weather?q=${locationName}&units=metric&appid=${apiKey}`;
 
   useEffect(() => {
     fetch(searchUrl).then(res => res.json()).then(data => {
@@ -73,7 +76,7 @@ export default function LocationDetailPage() {
         )
         : (
         <div>
-          <h1 className={styles.title}>{location}</h1>
+          <h1 className={styles.title}>{locationName}</h1>
 
           <div className={styles.wrapper}>
             <div className={styles.halfContainer}>

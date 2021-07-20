@@ -4,7 +4,7 @@ import Tile from '../components/Tile';
 import styles from '../styles/Home.module.css';
 
 export default function Home() {
-  const [cities, setCities] = useState(["Los Angeles", "New York", "Berlin", "Zurich", "Toyko"]);
+  const [cities, setCities] = useState(["Los Angeles", "New York", "Berlin", "Zurich", "Tokyo"]);
   const [userInputCity, setUserInputCity] = useState('');
 
   const handleInput = (event) => {
@@ -58,7 +58,7 @@ export default function Home() {
         <div className={styles.grid}>
           {cities.map((city, index) => {
             const cityUrl = `/${city.split(" ").join("-").toLowerCase()}`;
-            return (<Tile location={city} key={index} href={{pathname: cityUrl, query: { loc: city }}} />)
+            return (<Tile location={city} key={index} href={cityUrl} />)
           })}
         </div>
       </main>

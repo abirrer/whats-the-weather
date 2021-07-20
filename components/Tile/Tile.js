@@ -14,7 +14,7 @@ export default function Tile({ location, href }) {
 
 Tile.propTypes = {
   location: PropTypes.string.isRequired,
-  href: PropTypes.object
+  href: PropTypes.string
 };
 
 Tile.defaultProps = {

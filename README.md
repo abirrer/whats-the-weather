@@ -35,10 +35,11 @@ Completed:
 
 Improvements:
 <ul>
-    <li>Passing of the location value from homepage to detail page is ugly, not user-friendly, and easily tampered with (currently using router/params  but could have also used some type of state mgmt with redux, also context api).
+    <li>Passing of the location value from homepage to detail page is easily tampered with (currently using router/params but could have also used some type of state mgmt with redux, also context api).
     <li>Consider another location to make API request and store the data so that different pages can access data (like city name and temp on the dashboard and all details in the detail page).
     <li>Maintain updated city list after user addition (on refresh and back/forth navigation).
-    <li>Input validation error message to appear when a city inputted is a duplicate.
+    <li>Input validation at the time of submit re: is duplicate, is an acceptable location/spelled correctly, etc.
+    <li>Input validation error message to appear with specific, helpful context.
     <li>Back arrow for user to navigate to the homepage within the application.
     <li>Allow user to click enter key to submit input.
     <li>User selection of units (metric vs imperial, etc.).
@@ -50,8 +51,7 @@ Improvements:
 Known Issues:
 <ul>
     <li>Hide my API key!
-    <li>Input validation with the default list of cities needs to check for capitalizations, etc.
+    <li>Input validation with the default list of cities needs to check for capitalizations, special characters, etc.
     <li>Detail page refresh results in error every single time > want this to make a proper API request upon refresh.
-    <li>The Tokyo tile doesn't seem to be validated properly on default and that request fails every single time.
     <li>Sunset/sunrise timing is not location specific, it is provided in UTC across the board.
 </ul>
