@@ -8,7 +8,12 @@ export default function LocationDetailPage() {
   const router = useRouter();
   const { location } = router.query;
 
+  if (!location) {
+    return null
+  }
+
   //Convert url slug into page title and appropriate query string ("new-york" becomes "New York").
+  
   const capitalizedLocation = location.split('-').map( w =>  w.substring(0,1).toUpperCase()+ w.substring(1)).join(' ');
 
   const [locationName, setLocationName] = useState(capitalizedLocation); 
